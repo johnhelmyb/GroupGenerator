@@ -15,4 +15,8 @@ app.get('/', function(req, res){
   res.send('Hello World')
 })
 
+app.get('/students', function (req, res) {
+  res.send('dammmmm')
+})
+
 app.listen(port)
