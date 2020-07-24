@@ -19,4 +19,12 @@ app.get('/students', function (req, res) {
   res.send('dammmmm')
 })
 
+app.post('/students', function (req,res) {
+
+db.db.ccollection('students').insertOne(req.body);
+
+
+  res.send('post')
+});
+
 app.listen(port)
