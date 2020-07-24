@@ -1,7 +1,16 @@
+// IMPORTS
 var express = require("express")
+var mongo = require("./bd.js")
 var app = express()
-const port = 8000
 
+// VARIABLES
+const port = 8000
+var db = mongo.connectBdd()
+
+// UTILS
+app.use(express.urlencoded({ extended: true })) 
+
+// ALL ROUTE
 app.get('/', function(req, res){
   res.send('Hello World')
 })
