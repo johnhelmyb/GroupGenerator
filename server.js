@@ -1,11 +1,13 @@
 // IMPORTS
 var express = require("express")
-var mongo = require("./bd.js")
+var bd = require("./bd.js")
 var app = express()
+
+// MONGO
+var bdd = bd.connectBdd()
 
 // VARIABLES
 const port = 8000
-var db = mongo.connectBdd()
 
 // UTILS
 app.use(express.urlencoded({ extended: true })) 
@@ -19,12 +21,10 @@ app.get('/students', function (req, res) {
   res.send('dammmmm')
 })
 
-app.post('/students', function (req,res) {
-
-db.db.ccollection('students').insertOne(req.body);
-
-
-  res.send('post')
+app.post('/students', async function (req,res) {
+  const mongo = await bdd
+  mongo.collection('students').insertOne(req.body)
+  res.json('Sucess')
 });
 
 app.listen(port)
