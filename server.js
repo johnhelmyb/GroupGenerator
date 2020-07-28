@@ -19,8 +19,8 @@ app.set('view engine', 'ejs')
 app.get('/student', async(req,res) => {
   try{
     const getStudent = await fetch(URL_STUDENT)
-    const result = await getStudent.json()
-    res.render('pages/student', { data : result }) 
+    const parseStudent = await getStudent.json()
+    res.render('pages/student', { data : parseStudent }) 
   }catch(err){
     console.log(err)
   }
@@ -29,8 +29,8 @@ app.get('/student', async(req,res) => {
 app.get('/group', async(req,res) => {
   try{
     const getGroup = await fetch(URL_GROUP)
-    const result = await getGroup.json()
-    res.render('pages/group', { data : result }) 
+    const parseGroup = await getGroup.json()
+    res.render('pages/group', { data : parseGroup }) 
   }catch(err){
     console.log(err)
   }

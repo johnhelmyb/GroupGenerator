@@ -53,7 +53,7 @@ app.get('/group', async function(req,res){
 app.post('/group', async function(req,res){
   const mongo = await bdd
   mongo.collection('group').insertOne(req.body)
-  res.status(200)
+  res.json({ status: "succes"})
 });
 
 app.delete('/group/:name', async function(req,res){
