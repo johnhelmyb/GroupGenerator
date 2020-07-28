@@ -5,6 +5,14 @@
   <title>Titre de la page</title>
 </head>
 <body>
+  <script>
+    function handleDelete(e){
+      console.log(" id ==> ",  e.target.id)
+      const idGroupDelete = e.target.id
+      const url = '/groupe/' + idGroupDelete
+      // fetch(url)
+    }
+  </script>
   <main>
     <header>
       <%- include("../layout/header") -%>
@@ -14,7 +22,7 @@
         <h2>All Groups</h2>
         <ul>
           <% for(let datas of data) { %>
-            <li><%= datas.name %> (<%= datas.number %>) </li>
+            <li><%= datas.name %> (<%= datas.number %>) <button id="<%= datas._id %>"" onclick="handleDelete(event)">x</button></li>
           <% } %>
         </ul>
       </div>
@@ -29,5 +37,6 @@
       </div>
     </section>
   </main>
+  <!-- <script src="../../js/app.js"></script> -->
 </body>
 </html>

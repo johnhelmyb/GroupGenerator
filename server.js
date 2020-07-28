@@ -3,11 +3,16 @@ var express = require("express")
 var app = express()
 var fetch = require('node-fetch')
 var bodyParser = require("body-parser");
+var { config, obj } = require('./js/app.js')
+var { GET_URL_STUDENT,
+      POST_URL_STUDENT,
+      GET_URL_GROUP, 
+      POST_URL_GROUP
+    } = require('./js/const.js')
 
-// PORT SERVE AND URL 
+ 
+// PORT SERVE
 const PORT = 8080
-const URL_STUDENT = 'http://localhost:8000/students'
-const URL_GROUP = 'http://localhost:8000/group'
 
 // UTILS
 app.use(express.static(__dirname));
@@ -18,7 +23,7 @@ app.set('view engine', 'ejs')
 
 app.get('/student', async(req,res) => {
   try{
-    const getStudent = await fetch(URL_STUDENT)
+    const getStudent = await fetch(GET_URL_STUDENT)
     const parseStudent = await getStudent.json()
     res.render('pages/student', { data : parseStudent }) 
   }catch(err){
@@ -28,7 +33,7 @@ app.get('/student', async(req,res) => {
 
 app.get('/group', async(req,res) => {
   try{
-    const getGroup = await fetch(URL_GROUP)
+    const getGroup = await fetch(GET_URL_GROUP)
     const parseGroup = await getGroup.json()
     res.render('pages/group', { data : parseGroup }) 
   }catch(err){
@@ -37,23 +42,12 @@ app.get('/group', async(req,res) => {
 })
 
 app.post('/group', async(req,res) => {
+  const data = Object.assign({}, obj(req.body.projet, req.body.number))
   try{
-    const data = {
-      name: req.body.projet,
-      number: req.body.number
-    }
-    const config = {
-      method: "POST",
-      mode: 'cors',
-      headers:{
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }
-    fetch(URL_GROUP, config)
+    const response = await fetch(POST_URL_GROUP, config("POST", data))
     res.redirect(req.originalUrl)
   }catch(err){
-    console.log(err)
+    console.log(err.toString())
   }
 })
 
