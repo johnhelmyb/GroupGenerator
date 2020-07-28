@@ -4,6 +4,10 @@ var app = express()
 var fetch = require('node-fetch')
 const PORT = 8080
 
+// USE
+app.use(express.static(__dirname));
+
+//SET
 app.set('view engine', 'ejs')
 
 app.get('/student', async(req,res) => {
