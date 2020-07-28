@@ -11,6 +11,7 @@ const port = 8000
 
 // UTILS
 app.use(express.urlencoded({ extended: true })) 
+app.use(express.json());
 
 // ALL ROUTE
 app.get('/', function(req, res){
@@ -41,19 +42,18 @@ app.delete('/students/:name', async function(req,res){
 
 app.get('/group', async function(req,res){
   const mongo = await bdd
-  var cool= await mongo.collection('/group').find().toArray()
+  var cool = await mongo.collection('group').find().toArray()
   var array=[]
-   for (let i=0; i<cool.length; i++){
+  for (let i=0; i<cool.length; i++){
     array.push(cool[i]);
    }
-  res.send()
+  res.json(array)
 });
 
 app.post('/group', async function(req,res){
   const mongo = await bdd
   mongo.collection('group').insertOne(req.body)
-  console.log(req.body)
-  res.send()
+  res.status(200)
 });
 
 app.delete('/group/:name', async function(req,res){

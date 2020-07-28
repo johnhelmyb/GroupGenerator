@@ -5,6 +5,29 @@
   <title>Titre de la page</title>
 </head>
 <body>
-  <h1>Group</h1>
+  <main>
+    <header>
+      <%- include("../layout/header") -%>
+    </header>
+    <section>
+      <div>
+        <h2>All Groups</h2>
+        <ul>
+          <% for(let datas of data) { %>
+            <li><%= datas.name %> (<%= datas.number %>) </li>
+          <% } %>
+        </ul>
+      </div>
+      <div>
+        <form method="POST" action="/group">
+          <label for="name">Projet Name</label>
+          <input id="name" type="text" placeholder="Projet Name" name="projet">
+          <label for="group">Number Membre</label>
+          <input id="group" type="number" placeholder="Group Name" name="number">
+          <input type="submit" value="valider">
+        </form>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
