@@ -24,8 +24,7 @@ app.get('/students', async function(req,res) {
   for (let i=0; i<mycor.length; i++){
     array.push(mycor[i]);
   }
-  console.log('after loop', array)
-  res.send() 
+  res.json(array) 
 });
 
 app.post('/students', async function (req,res) {
