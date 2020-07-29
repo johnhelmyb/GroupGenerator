@@ -3,11 +3,13 @@ var express = require("express")
 var app = express()
 var fetch = require('node-fetch')
 var bodyParser = require("body-parser");
+var methodOverride = require('method-override')
 var { config, obj } = require('./public/js/app.js')
 var { GET_URL_STUDENT,
       POST_URL_STUDENT,
       GET_URL_GROUP, 
-      POST_URL_GROUP
+      POST_URL_GROUP,
+      DELETE_URL_GROUP
     } = require('./public/js/const.js')
 
  
@@ -15,7 +17,8 @@ var { GET_URL_STUDENT,
 const PORT = 8080
 
 // UTILS
-app.use(express.static(__dirname));
+app.use(methodOverride('_method'));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //SET
@@ -49,6 +52,15 @@ app.post('/group', async(req,res) => {
     res.redirect(req.originalUrl)
   }catch(err){
     console.log(err.toString())
+  }
+})
+
+app.post('/group/delete', async(req,res) => {
+  try{
+    const response = await fetch(DELETE_URL_GROUP, config("DELETE", { name : req.body._method }))
+    res.redirect('/group')
+  }catch(err){
+    console.log(err)
   }
 })
 

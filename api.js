@@ -58,8 +58,10 @@ app.post('/group', async function(req,res){
 
 app.delete('/group/:name', async function(req,res){
   const mongo = await bdd
-  mongo.collection('group').deleteOne(req.params)
-  res.send()
+  console.log("PARAMS => ", req.params)
+  console.log(req.body)
+  mongo.collection('group').deleteOne(req.body)
+  res.json(req.body)
 });
 
 app.listen(port)

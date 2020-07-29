@@ -2,8 +2,8 @@
     "version": 3,
     "mappings": "AAAA,AAAA,CAAC,CAAC;EACD,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;EACV,MAAM,EAAE,CAAC;EACT,SAAS,EAAE,IAAI;EACf,IAAI,EAAE,OAAO;EACb,cAAc,EAAE,QAAQ;CACxB",
     "sources": [
-        "style.scss"
+        "styleGroup.scss"
     ],
     "names": [],
-    "file": "style.css"
+    "file": "styleGroup.css"
 }
