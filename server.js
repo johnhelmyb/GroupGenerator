@@ -16,7 +16,7 @@ var { GET_URL_STUDENT,
 // PORT SERVE
 const PORT = 8080
 
-// UTILS
+// UTILS USE 
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));

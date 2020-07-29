@@ -13,55 +13,71 @@ const port = 8000
 app.use(express.urlencoded({ extended: true })) 
 app.use(express.json());
 
-// ALL ROUTE
-app.get('/', function(req, res){
-  res.send('Hello World')
-})
+// ALL ROUTE API 
+app.get('/students', async (req,res) => {
+  try{
+    const mongo = await bdd
+    const arrayStudent = await mongo.collection('students').find().toArray();
+    const findStudent = arrayStudent.map(student => {
+      return student
+    })
+    res.status(200).json(findStudent) 
+  }catch(err){
+    console.log(err)
+  } 
+});
 
-app.get('/students', async function(req,res) {
-  const mongo = await bdd
-  var mycor = await mongo.collection('students').find().toArray();
-  var array=[]
-  for (let i=0; i<mycor.length; i++){
-    array.push(mycor[i]);
+app.post('/students', async (req,res) => {
+  try{
+    const mongo = await bdd
+    const response = await mongo.collection('students').insertOne(req.body)
+    res.status(200).json('Student Posted')
+  }catch(err){
+    console.log(err)
   }
-  res.json(array) 
 });
 
-app.post('/students', async function (req,res) {
-  const mongo = await bdd
-  mongo.collection('students').insertOne(req.body)
-  res.json('Sucess')
-});
-
-app.delete('/students/:name', async function(req,res){
- const mongo = await bdd
- mongo.collection('students').deleteOne(req.params)
- res.send()
+app.delete('/students/:name', async (req,res) => {
+  try{
+    const mongo = await bdd
+    const response = await mongo.collection('students').deleteOne(req.params)
+    res.status(200).json("student deleted")
+  }catch(err){
+    console.log(err)
+  }
 })
 
-app.get('/group', async function(req,res){
-  const mongo = await bdd
-  var cool = await mongo.collection('group').find().toArray()
-  var array=[]
-  for (let i=0; i<cool.length; i++){
-    array.push(cool[i]);
-   }
-  res.json(array)
+app.get('/group', async (req,res) => {
+  try{
+    const mongo = await bdd
+    const arrayGroup = await mongo.collection('group').find().toArray()
+    const findGroup = arrayGroup.map(group => {
+      return group
+    })
+    res.status(200).json(findGroup)
+  }catch(err){
+    console.log(err)
+  }
 });
 
-app.post('/group', async function(req,res){
-  const mongo = await bdd
-  mongo.collection('group').insertOne(req.body)
-  res.json({ status: "succes"})
+app.post('/group', async (req,res) => {
+  try{
+    const mongo = await bdd
+    const response = mongo.collection('group').insertOne(req.body)
+    res.status(200).json("New group posted")
+  }catch(err){
+    console.log(err)
+  }
 });
 
-app.delete('/group/:name', async function(req,res){
-  const mongo = await bdd
-  console.log("PARAMS => ", req.params)
-  console.log(req.body)
-  mongo.collection('group').deleteOne(req.body)
-  res.json(req.body)
+app.delete('/group/:name', async (req,res) => {
+  try{
+    const mongo = await bdd
+    const response = await mongo.collection('group').deleteOne(req.body)
+    res.status(200).json({ nameGroup: req.body, message: "Goup deleted" })
+  }catch(err){
+    console.log(err)
+  }
 });
 
 app.listen(port)
