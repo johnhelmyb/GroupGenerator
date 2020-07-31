@@ -7,3 +7,10 @@ app.get('/students', async (req,res) => {
   }
   res.json(array) 
 });
+  //   for(let i = 0; i < arrayStudentRomdon.length; i++){
+  //      arrayStudent.push(arrayStudentRomdon[i])
+  //     for(let j= 0; j < array.length; j++){
+  //       array[j].student.push(arrayStudent)
+  //     }
+  //   }
+  // 

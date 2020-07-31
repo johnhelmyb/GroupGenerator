@@ -4,10 +4,10 @@ var app = express()
 var fetch = require('node-fetch')
 var bodyParser = require("body-parser");
 var methodOverride = require('method-override')
-var { config, obj } = require('./public/js/app.js')
+var { config, obj, studentRomdon, whileRandomStudent } = require('./public/js/app.js')
 var { GET_URL_STUDENT,
       POST_URL_STUDENT,
-      GET_URL_GROUP, 
+      GET_URL_GROUP,
       POST_URL_GROUP,
       DELETE_URL_GROUP
     } = require('./public/js/const.js')
@@ -45,10 +45,29 @@ app.get('/group', async(req,res) => {
   }
 })
 
-app.post('/group', async(req,res) => {
-  const data = Object.assign({}, obj(req.body.projet, req.body.number))
+app.get('/group/:name', async(req, res) => {
   try{
-    const response = await fetch(POST_URL_GROUP, config("POST", data))
+    const currentGroup = await fetch(GET_URL_GROUP + '/' + req.params.name, {
+      method: "GET",
+      headers:{
+        "Content-type": "application/json"
+      },
+    })
+    const parseCurrentGroup = await currentGroup.json()
+    console.log(parseCurrentGroup)
+    res.render('views/pages/groupName', { data : parseCurrentGroup})
+  }catch(err){
+    console.log(err)
+  }
+})
+
+app.post('/group', async(req,res) => {
+  try{
+    const getStudent = await fetch(GET_URL_STUDENT)
+    const parseStudent = await getStudent.json()
+    const randomArrayStudent = whileRandomStudent(parseStudent, req.body.number)
+    const data = Object.assign({}, obj(req.body.projet, req.body.number,randomArrayStudent ))
+    fetch(POST_URL_GROUP, config('POST', data))
     res.redirect(req.originalUrl)
   }catch(err){
     console.log(err.toString())

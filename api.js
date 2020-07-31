@@ -60,10 +60,40 @@ app.get('/group', async (req,res) => {
   }
 });
 
-app.post('/group', async (req,res) => {
+app.get('/group/:name', async(req, res) => {
   try{
     const mongo = await bdd
-    const response = mongo.collection('group').insertOne(req.body)
+    const response = await mongo.collection('group').find().toArray()
+    const findGroup = response.map(group => {
+      if(group.name == req.params.name){
+        return group
+      }
+    })
+    console.log(" FIND =>", findGroup)
+    res.status(200).json(findGroup)
+  }catch(err){
+    console.log(err)
+  }
+})
+
+app.post('/group', async (req,res) => {
+  try{
+    // CHANTIER... 😅
+    let obj = {}
+    const mongo = await bdd
+    const findDocument = await mongo.collection('group').find().toArray()
+      if(findDocument.length !== 0)
+        for(let result of findDocument){
+          obj.name = result.name === req.body.name ? result.name : false
+        }
+      if(obj.name){
+        mongo.collection('group').updateOne(
+          { 'name': req.body.name},
+          { $push: { student : [req.body.student]}}
+          )
+          return res.status(200).json("New group posted")
+      }
+    mongo.collection('group').insertOne(req.body)
     res.status(200).json("New group posted")
   }catch(err){
     console.log(err)

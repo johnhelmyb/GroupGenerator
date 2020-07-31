@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+</head>
+<body>
+  <main>
+    <header>
+      <%- include("../layout/header") -%>
+    </header>
+    <section>
+      <div>
+        <ul>
+          <% for(let datas of data) { %>
+            <h2>Groups <%= datas.name %></h2>
+            <p> <%= datas.student %></p>
+          <% } %>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
